@@ -162,12 +162,3 @@ public class DomainEventTest extends AbstractTransactionalJUnit4SpringContextTes
     }
 }
 ```
-## 问题
-所有bus的接口全限定名称一样了，在微服务架构下，dubbo client和dubbo server配置问题
-解决方案
-CommandBus/QueryBus等暴露成Spring bean时，对于A服务依赖B/C两个服务时，这些Bus在A端要与置两次，B/C里只配置一次，但B/C中都要指定Bus的dubbo group，A上的dubbo client配置根据group决定要调到哪去。
-B/C两个应用分别封装一个独立的CommandGateway、QueryGateway接口，全限定名根据服务域自定义（不会重名），作为dubbo服务暴露，Commandbus和QueryBus作为上述接口实现的实例属性即可，同时，gateway接口还可以统一处理command异常，封装成Result返回dubbo client。gateway接口还可以统一控制事务（推荐）
-dubbo接口超时重试问题
-解决方案
-所有CommandGateway接口的超时重试机制应该关闭，因为command很难做到幂等，重试会造成系统状态不一致。
-所有QueryGateway配统一重试机制。
