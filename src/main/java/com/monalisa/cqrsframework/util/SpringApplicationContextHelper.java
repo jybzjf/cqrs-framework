@@ -3,12 +3,14 @@ package com.monalisa.cqrsframework.util;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
  * ApplicationContextHelper
  */
 @Component
+@Lazy(false)
 public class SpringApplicationContextHelper implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
